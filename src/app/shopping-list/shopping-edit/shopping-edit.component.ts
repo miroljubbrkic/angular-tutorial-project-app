@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Ingridient } from 'src/app/shared/ingridient.model';
 import { ShoppingListService } from '../shopping-list.service';
 
@@ -9,8 +10,6 @@ import { ShoppingListService } from '../shopping-list.service';
 })
 export class ShoppingEditComponent implements OnInit {
 
-  @ViewChild('nameInput') nameInputRef!: ElementRef
-  @ViewChild('amountInput') amountInputRef!: ElementRef
 
 
 
@@ -20,10 +19,9 @@ export class ShoppingEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onAddItem() {
-    const ingName = this.nameInputRef.nativeElement.value
-    const ingAmount = this.amountInputRef.nativeElement.value
-    const newIngridient = new Ingridient(ingName,ingAmount)
+  onAddItem(form: NgForm) {
+    const value = form.value
+    const newIngridient = new Ingridient(value.name,value.amount)
     this.slService.addIngridient(newIngridient)
   }
 
